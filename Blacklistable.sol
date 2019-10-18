@@ -75,6 +75,7 @@ contract Blacklistable is Ownable {
      * @param _account The address to remove from the blacklist
     */
     function unBlacklist(address _account) public onlyBlacklister {
+        require(blacklisted[_account] == true);
         blacklisted[_account] = false;
         emit UnBlacklisted(_account);
     }
