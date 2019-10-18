@@ -19,7 +19,7 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.26;
 
 import './ERC20.sol';
 import './SafeMath.sol';
@@ -54,7 +54,7 @@ contract FiatTokenV1 is Ownable, ERC20, Pausable, Blacklistable {
     event MinterRemoved(address indexed oldMinter);
     event MasterMinterChanged(address indexed newMasterMinter);
 
-    function initialize(
+    function initialize (
         string _name,
         string _symbol,
         string _currency,
@@ -63,7 +63,7 @@ contract FiatTokenV1 is Ownable, ERC20, Pausable, Blacklistable {
         address _pauser,
         address _blacklister,
         address _owner
-    ) public {
+    ) onlyOwner public {
         require(!initialized);
         require(_masterMinter != address(0));
         require(_pauser != address(0));
@@ -132,15 +132,6 @@ contract FiatTokenV1 is Ownable, ERC20, Pausable, Blacklistable {
     */
     function isMinter(address account) public view returns (bool) {
         return minters[account];
-    }
-
-    /**
-     * @dev Get allowed amount for an account
-     * @param owner address The account owner
-     * @param spender address The account spender
-    */
-    function allowance(address owner, address spender) public view returns (uint256) {
-        return allowed[owner][spender];
     }
 
     /**
@@ -222,6 +213,7 @@ contract FiatTokenV1 is Ownable, ERC20, Pausable, Blacklistable {
      * @return True if the operation was successful.
     */
     function removeMinter(address minter) onlyMasterMinter public returns (bool) {
+        require(minters[minter] == true);
         minters[minter] = false;
         minterAllowed[minter] = 0;
         emit MinterRemoved(minter);

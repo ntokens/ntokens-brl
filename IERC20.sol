@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity 0.4.26;
 
 /**
  * @title ERC20 interface
@@ -8,9 +8,6 @@ interface IERC20 {
   function totalSupply() external view returns (uint256);
 
   function balanceOf(address who) external view returns (uint256);
-
-  function allowance(address owner, address spender)
-    external view returns (uint256);
 
   function transfer(address to, uint256 value) external returns (bool);
 
