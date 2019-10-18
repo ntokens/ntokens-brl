@@ -150,16 +150,6 @@ contract FiatTokenV1 is Ownable, ERC20, Pausable, Blacklistable {
     }
 
     /**
-     * @dev Adds blacklisted check to approve
-     * @return True if the operation was successful.
-    */
-    function approve(address _spender, uint256 _value) whenNotPaused notBlacklisted(msg.sender) notBlacklisted(_spender) public returns (bool) {
-        allowed[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
-    }
-
-    /**
      * @dev Transfer tokens from one address to another.
      * @param _from address The address which you want to send tokens from
      * @param _to address The address which you want to transfer to
